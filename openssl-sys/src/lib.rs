@@ -17,6 +17,7 @@ pub use dh::*;
 pub use dsa::*;
 pub use dtls1::*;
 pub use ec::*;
+pub use engine::*;
 pub use err::*;
 pub use evp::*;
 pub use hmac::*;
@@ -54,6 +55,7 @@ mod dh;
 mod dsa;
 mod dtls1;
 mod ec;
+mod engine;
 mod err;
 mod evp;
 mod hmac;
@@ -150,6 +152,8 @@ pub fn init() {
         SSL_library_init();
         SSL_load_error_strings();
         OPENSSL_add_all_algorithms_noconf();
+        ENGINE_load_builtin_engines();
+        ENGINE_register_all_complete();
 
         let num_locks = ::CRYPTO_num_locks();
         let mut mutexes = Box::new(Vec::new());
